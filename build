@@ -1,0 +1,26 @@
+import:
+	A 		https://github.com/ar-visions/A main
+	vec 	https://github.com/ar-visions/vec main
+
+	deflate https://github.com/ebiggers/libdeflate 682a668
+		-DBUILD_SHARED_LIBS=ON
+
+	openexr https://github.com/AcademySoftwareFoundation/openexr 0b83825
+		-DBUILD_SHARED_LIBS=ON
+		-lOpenEXR
+		-lOpenEXRUtil
+
+	zlib 	https://github.com/madler/zlib 04f42ce
+		-lz -lm
+	
+	png 	https://github.com/glennrp/libpng 07b8803
+		-lpng
+	
+	opencv https://github.com/opencv/opencv 31b0eee
+		-DBUILD_LIST=core,imgproc
+		-lopencv_imgproc
+
+	-mavx2 -mfma
+	-I$TAPESTRY/include/opencv4
+	-I$TAPESTRY/include/OpenEXR
+	-I$TAPESTRY/include/Imath
