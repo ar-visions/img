@@ -37,6 +37,36 @@ declare_enum(Filter)
     enum_value_v_2(X,Y, environment,    9, Four)
 declare_enum(Surface)
 
+
+#define join_schema(X,Y,...) \
+    enum_value_v(X, Y, none,       0) \
+    enum_value_v(X, Y, miter,      1) \
+    enum_value_v(X, Y, round,      2) \
+    enum_value_v(X, Y, bevel,      3)
+declare_enum(join)
+
+
+#define cap_schema(X,Y,...) \
+    enum_value_v(X, Y, none,       0) \
+    enum_value_v(X, Y, round,      1) \
+    enum_value_v(X, Y, square,     2)
+declare_enum(cap)
+
+
+#define stroke_schema(X,Y,...) \
+    i_prop    (X,Y, public,   f32,     width) \
+    i_prop    (X,Y, public,   cap,     cap) \
+    i_prop    (X,Y, public,   join,    join) \
+    i_prop    (X,Y, public,   f32,     miter_limit) \
+    i_prop    (X,Y, public,   f32,     dash_offset)
+declare_class(stroke)
+
+
+#define font_schema(X,Y,...) \
+    i_prop    (X,Y, public,   path,    path) \
+    i_prop    (X,Y, public,   f32,     size)
+declare_class(font)
+
 #define image_schema(X,Y,...) \
     i_ctr     (X,Y,    public,     string) \
     i_ctr     (X,Y,    public,     symbol) \

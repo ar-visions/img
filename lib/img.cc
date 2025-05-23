@@ -301,3 +301,8 @@ object image_get(image a, num y) {
 }
 
 define_class(image);
+
+define_enum (join)
+define_enum (cap)
+define_class(stroke)
+define_class(font)
