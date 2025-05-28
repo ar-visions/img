@@ -300,9 +300,8 @@ object image_get(image a, num y) {
     return (object)&bytes[a->pixel_size * a->width * y];
 }
 
-define_class(image);
+define_class(image, A);
 
 define_enum (join)
 define_enum (cap)
-define_class(stroke)
-define_class(font)
+define_class(font,  A)
