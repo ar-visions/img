@@ -79,7 +79,8 @@ declare_class(font)
     i_method  (X,Y,    public,     i64,                    byte_count) \
     i_method  (X,Y,    public,     i64,                    len) \
     i_method  (X,Y,    public,     object,                 get, num) \
-    i_override(X,Y,    method,     init, dealloc) \
+    i_override(X,Y,    method,     init) \
+    i_override(X,Y,    method,     dealloc) \
     i_override(X,Y,    method,     copy)
 declare_class(image, i32)
 
