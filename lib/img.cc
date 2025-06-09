@@ -282,6 +282,8 @@ i32 image_png(image a, path uri) {
 }
 
 none image_dealloc(image a) {
+    if (a->res_dealloc)
+        a->res_dealloc((object)a);
     A header = head(a);
     free(header->data);
 }
@@ -304,4 +306,29 @@ define_class(image, A);
 
 define_enum (join)
 define_enum (cap)
-define_class(font,  A)
+
+
+static hook font_manager_init;
+static hook font_manager_dealloc;
+
+none set_font_manager(hook init, hook dealloc) {
+    font_manager_init = init;
+    font_manager_dealloc = dealloc;
+}
+
+none font_dealloc(font f) {
+    font_manager_dealloc((object)f);
+}
+
+font font_init(font f) {
+    font_manager_init((object)f);
+    return f;
+}
+
+font font_from_path(font f, path uri) {
+    f->uri = uri;
+    return f;
+}
+
+
+define_class(font, A)

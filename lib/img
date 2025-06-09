@@ -52,11 +52,22 @@ declare_enum(join)
     enum_value_v(E,T,Y, square,     2)
 declare_enum(cap)
 
-
 #define font_schema(X,Y,...) \
-    i_prop    (X,Y, public,   path,    path) \
-    i_prop    (X,Y, public,   f32,     size)
+    i_prop    (X,Y, public,   path,    uri) \
+    i_prop    (X,Y, public,   f32,     size) \
+    i_prop    (X,Y, opaque,   handle,  res) \
+    i_prop    (X,Y, opaque,   handle,  tf) \
+    i_override(X,Y, method, init) \
+    i_override(X,Y, method, dealloc)
 declare_class(font)
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+none set_font_manager(hook init, hook dealloc);
+#ifdef __cplusplus
+}
+#endif
 
 #define image_schema(X,Y,...) \
     i_ctr     (X,Y,    public,     string) \
@@ -72,6 +83,8 @@ declare_class(font)
     i_prop    (X,Y,    public,     object,                 source) \
     i_prop    (X,Y,    public,     Filter,                 filter) \
     i_prop    (X,Y,    public,     object,                 user) \
+    i_prop    (X,Y,    opaque,     handle,                 res) \
+    i_prop    (X,Y,    opaque,     hook,                   res_dealloc) \
     i_method  (X,Y,    public,     image,                  gaussian, f32) \
     i_method  (X,Y,    public,     image,                  resize, i32, i32) \
     i_method  (X,Y,    public,     i32,                    png, path) \
