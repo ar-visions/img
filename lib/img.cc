@@ -14,7 +14,9 @@
 // color maps, grayscale components for various PBR material attributes
 
 image image_copy(image a) {
-    image res = image(width, a->width, height, a->height, format, a->format, surface, a->surface);
+    image res = image(
+        width,  a->width,  height,  a->height,
+        format, a->format, surface, a->surface);
     memcpy(data(res), data(a), byte_count(a));
     return res;
 }
@@ -96,7 +98,8 @@ none image_init(image a) {
             f == Pixel_none ? typeid(i8) : f == Pixel_rgba8   ? typeid(i8)  : f == Pixel_rgbf32 ? typeid(f32) :
             f == Pixel_u8   ? typeid(i8) : f == Pixel_rgbaf32 ? typeid(f32) : typeid(f32);
         /// validate with channels if set?
-        header->data = A_alloc2(pixel_type, component_type, shape_new(a->height, a->width, component_type->size, 0), false);
+        header->data = A_alloc2(
+            pixel_type, component_type, shape_new(a->height, a->width, component_type->size, 0));
         return;
     }
 
@@ -121,7 +124,7 @@ none image_init(image a) {
         a->pixel_size = sizeof(f32) * a->channels;
 
         int total_floats = width * height * 4;
-        f32* data = (f32*)A_alloc2(typeid(rgbaf), typeid(f32), shape_new(height, width, sizeof(f32), 0), false);
+        f32* data = (f32*)A_alloc2(typeid(rgbaf), typeid(f32), shape_new(height, width, sizeof(f32), 0));
 
         Imf::Array2D<Rgba> pixels;
         pixels.resizeErase(height, width); // [y][x] format
@@ -165,7 +168,7 @@ none image_init(image a) {
         /// store the exact format read
         png_read_update_info (png, info);
         png_bytep* rows = (png_bytep*)malloc (sizeof(png_bytep) * a->height);
-        u8*        data = (u8*)A_alloc(typeid(u8), a->width * a->height * a->channels * (bit_depth / 8), false);
+        u8*        data = (u8*)A_alloc(typeid(u8), a->width * a->height * a->channels * (bit_depth / 8));
         for (int y = 0; y < a->height; y++) {
             rows[y] = data + (y * a->width * a->channels * (bit_depth / 8));
         }
@@ -284,8 +287,8 @@ i32 image_png(image a, path uri) {
 none image_dealloc(image a) {
     if (a->res_dealloc)
         a->res_dealloc((object)a);
-    A header = head(a);
-    free(header->data);
+    A header = head(a); 
+    drop(header->data);
 }
 
 num image_len(image a) {
@@ -318,6 +321,12 @@ none set_font_manager(hook init, hook dealloc) {
 
 none font_dealloc(font f) {
     font_manager_dealloc((object)f);
+}
+
+A font_copy(font f) {
+    font cp = (font)A_copy((A)f);
+    font_manager_init((object)cp);
+    return (A)cp;
 }
 
 font font_init(font f) {

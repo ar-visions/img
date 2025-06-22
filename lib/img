@@ -57,6 +57,7 @@ declare_enum(cap)
     i_prop    (X,Y, public,   f32,     size) \
     i_prop    (X,Y, opaque,   handle,  res) \
     i_prop    (X,Y, opaque,   handle,  tf) \
+    i_override(X,Y, method, copy) \
     i_override(X,Y, method, init) \
     i_override(X,Y, method, dealloc)
 declare_class(font)
