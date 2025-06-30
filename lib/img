@@ -86,6 +86,7 @@ none set_font_manager(hook init, hook dealloc);
     i_prop    (X,Y,    public,     object,                 user) \
     i_prop    (X,Y,    opaque,     handle,                 res) \
     i_prop    (X,Y,    opaque,     hook,                   res_dealloc) \
+    i_prop    (X,Y,    opaque,     ARef,                   res_bits) \
     i_method  (X,Y,    public,     image,                  gaussian, f32) \
     i_method  (X,Y,    public,     image,                  resize, i32, i32) \
     i_method  (X,Y,    public,     i32,                    png, path) \

@@ -97,9 +97,14 @@ none image_init(image a) {
         AType component_type =
             f == Pixel_none ? typeid(i8) : f == Pixel_rgba8   ? typeid(i8)  : f == Pixel_rgbf32 ? typeid(f32) :
             f == Pixel_u8   ? typeid(i8) : f == Pixel_rgbaf32 ? typeid(f32) : typeid(f32);
-        /// validate with channels if set?
-        header->data = A_alloc2(
-            pixel_type, component_type, shape_new(a->height, a->width, component_type->size, 0));
+
+        if (a->res_bits) {
+            header->data = (object)a->res_bits; // we leave this up to res, but may support fallback cases where thats not provided
+        } else {
+            /// validate with channels if set?
+            header->data = A_alloc2(
+                pixel_type, component_type, shape_new(a->height, a->width, component_type->size, 0));
+        }
         return;
     }
 
@@ -285,10 +290,15 @@ i32 image_png(image a, path uri) {
 }
 
 none image_dealloc(image a) {
-    if (a->res_dealloc)
-        a->res_dealloc((object)a);
     A header = head(a); 
-    drop(header->data);
+    if (a->res_dealloc) {
+        a->res_dealloc((object)a);
+        header->data = null;
+    }
+    if (!a->res_bits) {
+        drop(header->data);
+        header->data = null;
+    }
 }
 
 num image_len(image a) {
