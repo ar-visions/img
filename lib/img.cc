@@ -103,7 +103,7 @@ none image_init(image a) {
         } else {
             /// validate with channels if set?
             header->data = A_alloc2(
-                pixel_type, component_type, shape_new(a->height, a->width, component_type->size, 0));
+                pixel_type, component_type, shape_new(a->height, a->width, pixel_type->size, 0));
         }
         return;
     }
