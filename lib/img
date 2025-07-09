@@ -52,9 +52,20 @@ declare_enum(join)
     enum_value_v(E,T,Y, square,     2)
 declare_enum(cap)
 
+#define variant_schema(E,T,Y,...) \
+    enum_value_v(E,T,Y, none,       0) \
+    enum_value_v(E,T,Y, small_caps, 1) \
+    enum_value_v(E,T,Y, mono,       2)
+declare_enum(variant)
+
 #define font_schema(X,Y,...) \
     i_prop    (X,Y, public,   path,    uri) \
+    i_prop    (X,Y, public,   bool,    bold) \
+    i_prop    (X,Y, public,   bool,    italic) \
+    i_prop    (X,Y, public,   bool,    underline) \
+    i_prop    (X,Y, public,   variant, variant) \
     i_prop    (X,Y, public,   f32,     size) \
+    i_prop    (X,Y, public,   f32,     kerning) \
     i_prop    (X,Y, opaque,   handle,  res) \
     i_prop    (X,Y, opaque,   handle,  tf) \
     i_override(X,Y, method, copy) \

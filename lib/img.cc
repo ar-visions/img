@@ -351,3 +351,4 @@ font font_from_path(font f, path uri) {
 
 
 define_class(font, A)
+define_enum(variant)
